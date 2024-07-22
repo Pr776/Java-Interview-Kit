@@ -1,0 +1,202 @@
+Normalization in DB:
+
+Normalization means organise the data in proper way in database. It's included the relation between combine of the table.
+It also reduce redundacncy and data inconsistency in dependency.
+
+What are the main features in Java 8 ?
+
+Lambda Expressions,
+Stream API,
+date and time API,
+default methods,
+optional classes
+
+
+Checked Exception :- (Throwable,Exception,IOException ,InterruptedException ,ServletException)
+Unchecked Exception :- (RuntimeException , VM Error )
+
+
+The exception which are checked by compiler for smooth execution of the program at compile time,whether the programmer handling or not, such type of checking is done by "compiler".This type ofthings is called"Checked Exception".
+
+The exception which are not checked by "compiler" is called Unchecked Exception.
+
+throw: throw keyword is used to throw an exception.
+throws: throws keyword is used to declare an exception.
+
+
+What is the difference between shallow copy and deep copy in Java ?
+
+shallow copy creates a new object with the same values as the original object, while deep copy creates a new object with new values
+
+Eager Loading is a design pattern in which data initialization occurs on the spot.
+Lazy Loading is a design pattern that we use to defer initialization of an object as long as it’s possible.
+
+IllegalThreadStateException: (if we start the thread twice, like t.start(); t.start())
+
+
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class}) (if we want to exclude a specific @configuration in spring boot application, then what have to do?)
+
+
+Default scope of spring bean is singleton, but we can change it by using scope filter
+
+what is the spring bean life cycle?
+Bean life cycle is managed by the spring container. When we run the program then, first of all, the spring container gets started. After that, the container creates the instance of a bean as per the request, and then dependencies are injected. And finally, the bean is destroyed when the spring container is closed.
+
+// Program to find the duplicate characters in a string?
+
+class HelloWorld {
+    public static void main(String[] args) {
+        String str1 = "Java Developer";
+        char[] str2 = str1.toCharArray();
+        int count = 0;
+        
+        for(int i=0;i<str2.length;i++){
+            count=1;
+            for(int j=i+1;j<str2.length;j++){
+                if(str2[i]==str2[j] && str2[j]!=' '){
+                    count++;
+                    str2[j] =0;
+                }
+            }
+            if(count>1 && str2[i]!=0){
+                System.out.println(str2[i]);
+            }
+        }
+    }
+}
+
+//check the all numbers are even in a List using java 8 features.
+import java.util.*;
+class HelloWorld {
+    public static void main(String[] args) {
+       List<Integer> list = Arrays.asList(2,8,4,9);
+       
+       boolean result = list.stream().allMatch(n->n%2==0);
+       
+       if(result){
+           System.out.println("All the numbers even");
+       }
+       else{
+           System.out.println("All the numbers are not even");
+       }
+    }
+}
+
+//find the first element starting with character b
+
+import java.util.*;
+class HelloWorld {
+    public static void main(String[] args) {
+       List<String> string = Arrays.asList("apple","orange","banana");
+       
+      Optional<String> result= string.stream().filter(n->n.startsWith("c")).findFirst();
+       System.out.println(result);
+    }
+       
+}
+
+// Reverse of a number
+
+
+What is the difference between authentication and authorizations in spring boot?
+
+What is the difference between @Autowired and @Qualifier annotation in spring boot?
+
+Use @Autowired when you want Spring to automatically inject a dependency into a class without specifying the bean name explicitly.It’s especially useful when there is only one bean of a specific type in the application context, or when you want to inject the primary bean of that type.
+
+Use @Autowired with @Qualifier:
+Use @Autowired in combination with @Qualifier when there are multiple beans of the same type in the application context, and you need to specify which one to inject.@Qualifier allows you to provide a specific bean name or value to indicate which bean should be injected.
+@Autowired
+@Qualifier("specificBeanName") 
+private SomeService someService;
+
+
+What is Maven ?
+Maven is an open-source build automation and project management tool widely used for Java applications. 
+
+
+
+Diffrence between Array and ArrayList .
+
+What is the use of LinkedList ?
+
+What is String Leteral ?
+
+String str = 1+2+3+"abc"+3+4;  (Output)
+
+What is Constructor ? And types of ConStrcutor?
+
+Reverse of number? (Using Logic, using StringBuilder)
+
+
+How will you configure the JVM if file size is larger that JVM?
+
+You can do this by setting the JVM memory configuration. To set the JVM memory configuration: -Xmx should be between 80% and 100% of the machine's physical memory. If you set -Xmx too small, the application server may fail with an OutOfMemory error.
+
+
+CORE JAVA: 
+1. Internal working of TreeMap?
+
+TreeMap class is like HashMap. TreeMap stores key-value pairs. The main difference is that TreeMap sorts the key in ascending order. TreeMap is sorted as the ordering of its keys, or by a Comparator provided at map creation time, depending on which constructor is used.
+
+
+ 2. Difference between ArrayList and linkedlist? 
+
+
+3. Aggregation? 
+If a class have an entity reference, it is known as Aggregation. Aggregation represents HAS-A relationship.
+
+Consider a situation, Employee object contains many informations such as id, name, emailId etc. It contains one more object named address, which contains its own informations such as city, state, country, zipcode etc. as given below.
+
+
+4.Difference between heap and stack?
+
+Stack memory is a sort of memory allocation that the OS continuously manages and uses to store local variables in a LIFO order. On the other hand, heap memory is a type of dynamic memory allocation used for storing objects and data structures that require a longer lifespan than stack memory.
+
+HIBERNATE:
+
+5. Difference between get and load methods? 
+6. Difference between update and merge methods? 
+7. Difference between session and session factory? 
+
+SessionFactory is a factory class for Session objects. It is available for the whole application while a Session is only available for particular transaction. Session is short-lived while SessionFactory objects are long-lived. SessionFactory provides a second level cache and Session provides a first level cache.
+
+8. Difference between save and persist methods?
+
+
+Definition of classes and object. Theory - Oops concepts. Difference between == and equals method for a string. Use of finally keyword in Java What is overloading Write a program to find duplicate integers from a given integer array.
+
+
+9. What is @ExceptionHandler in Java?
+ExceptionHandler is the central point for handling unexpected Exception s that are thrown during the Faces lifecycle. 
+
+
+10.what is functional interface in java?
+An Interface that contains exactly one abstract method is known as functional interface. It can have any number of default, static methods but can contain only one abstract method. 
+
+
+
+
+
+#### Not that much hands on experience, but I have basic knowledge
+
+#### I have no answer for it, but ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

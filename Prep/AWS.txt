@@ -1,0 +1,691 @@
+* IT Services using in online is called Cloud computing. Pay for Usage. 
+(2 region in India---> Mumbai , Hyderabad)
+
+* High Availability----->Means Multiple AZ
+
+* AWS Private network: Means all AZ Connected through Fiber optics cables in global.
+
+* Available Zone(Group of Data Center)
+
+* Latency means delay in respone.
+
+* On-prem: private data centers that companies house in their own facilities and maintain themselves.
+
+* CDN(Content delivery network): used for global audiance.
+   (By using edge-locations,Cache also(provided by cloudFront service) global-users can get response with low latency.)
+
+* 1)IAM:   (Root User, IAM User, Policy)
+    ----
+       Root User(By default all permission)--> Account creater / Owner of the Account. (root user is having all services                          permission to do operation)
+
+       Root User(Company Domain)---------> IAM User(By default no permission) (access for Employees(N provide specific service as per designation) )
+
+    By "Policy", Root user will provide service access to IAM users.
+
+     ("Principle of Least privilege"---->Means provide service to employee which is need, not extra services, Give minimum permission which is required.)
+
+
+         * Authentication---> successfully login through username and password 
+         * Autorization -----> For checking for which service he/she is able to access
+
+   "User":----> For individual employee, provide access of AWS Services.
+   -------
+
+   "User group":--->We are creating a "user group" for provide access same AWS service for N number of Employees.
+   -------------   
+
+   "Policy":
+    --------
+          A document that has permissions written.
+          It's written by JSON Format.
+          In JSON having "Statement" List Object, insdie this having 3 object compulsary "Effect"(Allow, Deny), "Action", and "Resource".
+               Explicit means----->Direct Allow
+               Implicit means----->Indirect Allow
+
+    Policy is of 2 type----> 1) AWS Managed  2) Custum Managed
+
+    Roles: (for temporary access)
+   -------
+   "Assume "Role" "---->Means temporarily provide AWS services access to any employee for certain period of time by "Root User"
+                          (for a time like 1h , 5h, Max-->12h , then after 12h session will expired....etc)
+
+        Then after create roles_user, the have to change "Trust Relationship" json, then instead of root use user/userName.
+        (After work of an employee, work will automate save, after his/her session expired)
+
+       If an employee finish his/her work before session time expired, then he can switch Back ("switchRole") the role.
+
+       When an employee switch to role user access, the permanent service access are not autorized that time, when he/she switch the role then can able to access permanent access AWS services which provided by root user.
+
+
+   **Federated User:(DNDN8010....etc)  (Authentication by Web (URL) Identity)
+   -----------------
+      If a company having 500 of employees, then there is not possible to create IAM user for all employee.
+
+      In this case we can use "Federated User".
+      
+      Corporate Company(Maxlife) having their own database and also creating userIds (DNDN8010) for employees Authtentication.
+      It's possible with the help of "Role".
+
+      This Role will created inside IAM Roles---click create Role -->then choose "Web Identity"
+
+
+      Service-->Service ("AWS Service" inside IAM Roles)
+      ------------------
+      From one service of AWS can perform access(Read,write...etc) to another service of AWS.
+
+    
+
+    (Compute Service Category--->EC2,EBS)
+ 2) EC2 (Elastic Compute Cloud):
+    ----------------------------
+     Compute Service means where you can run your application. (ie. any website, application etc).
+
+     For run an website we have to deploy our code, so we have to need a Machine. (deployment).
+     So this is virtual server/ Machine on cloud. OS also added to this virtual machine.
+
+     * So here EC2 is provide virtual server/ Vertual Machine(VM).
+      One single virtual machine(VM) of EC2 is called EC2 "instance".
+
+      EC2 Requres-----> OS, CPU & Primary Memory(RAM), Storage(HDD/SSD)-->storage by help of EBS service.
+
+        Instances:
+        ----------
+          "Name"-->"Add additional Tag" use for like description of VM and in future easy to search the VM.(like->uat, digi-    dev,   digi-prod,prod , dev etc)
+         
+           OS--> OS is given by "AMI" ("Amazon Machine Image")
+           CPU & RAM---> Means "Instance Type"
+           Network--> VPC, Subnet
+           Firewall--->Security Groups (Inbound IP)
+           Storage---> Provide by EBS service.
+           Application--->
+           User Data---> Adding script (like html page ..etc) 
+   
+           #!/bin/bash 
+		# Use this for your user data (script from top to bottom)
+		# install httpd (Linux 2 version)
+		yum update -y
+		yum install -y httpd
+		systemctl start httpd
+		systemctl enable httpd
+		echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
+
+                Note: yum install -y httpd  (command used for install httpd(Apache) server)
+
+           
+       *For EC2 there is no storage service available, so for storage service we have to take help from another service
+         i.e called "EBS" in EC2. (Elastic Block Store) (like a storage disk).(Root Voluma(OS), EBS Volume)
+
+        "Key Pairs":
+         ----------
+         We need key pair for login into EC2 instance, (this option is visible when got to create an EC2 instance).
+           (like when we login to our MLI Desktop through SSOID. (but MLI it's Onprem server not AWS server)
+
+        You having the key is private key  and EC2 having the key is public key.
+        
+        We will not use userdata script when we use key pairs, instead this we use SSH command.        
+
+        SSH---->Secure Shell Access (this is the protocol, here SSH command will use in userdata)-->like cmd prompt.
+
+        After create EC2 instace using keypairs, when we hit direct public IP on browser, then it's refuse to connect.
+        so for that go to EC2 instance and select instace and click connect, then connect.
+
+        If you want to connect EC2 from your local system,then go to your command prompt and type below cmd
+                      ssh -i ".pem file location" ec2-user@PublicIP
+                    (ssh -i "C:\Users\Dell\Downloads\mykey.pem" ec2-user@107.23.16.60)
+ 
+                yum install -y httpd  (command used for install httpd(Apache) server)
+                sudo su (for identity as root user)
+                systemctl start httpd   (for start Apache Tomcat Server)
+                systemctl enable httpd  (for enable Apache Tomcat Server)
+
+        (pem file means private key which is dowloaded at the time of key   pair)
+
+     Note: We can add all things add the time of EC2 creation in userdata
+           If you want to add later, we can through SSH command from command prompt. (post EC2 Creation).
+
+
+        EBS: (provide storage to EC2 instance)
+        ----
+        It's used for provide storage to EC2 instaces. (like OS,application(root volume), stoarge(EBS Volume))
+       It's of  2 types:
+                  1) HDD
+                  2) SSD
+       IOPS---> Input output operation / second.
+       Throughput ---> Data transfer rate / second.
+
+     We can backup these volume using "Snapshot". (snapshots means Backup)
+
+  Note: If you terminate(delete) the EC2 instance, then EBS Root volume storage will be deleted, But EBS volume(extra volume which we added) wil not delete.
+
+
+
+    High Availability(Multiple AZ) and Scalability(ASG)
+    -------------------------------------------
+  3) ELB  and ASG  (Elastic load balancer and Auto scaling group)  (2 services)
+    -------------------------------------------------------------
+          
+     ELB:  (Elastic Load Balancer) (do fail over and load balancing)
+    ------
+    When the global users are hiting the services(from public network), there is no need to provide all the EC2 IPs to the users.
+    So we have common front end, that features will given by "ELB"(hit through the DNS).
+
+   Load balancer means, when multiple request come at a time, then load balancer distribute the request between multiple ec2       machines.
+
+  * ELB has a ability to identify unhealthy machine in a live environment.
+  
+   Scaling--->Adjusting the capacity as per the load.
+      Scale-Out Operation --->Increase the machines called scaleout opration. (i.e. on a Sale)
+      Scale-In Operation  --->Decrease the machines called scalein operation. (i.e. when sale is not available)
+
+      Practical: (for Auto scaling group)
+     -------------
+
+      a) Inside EC2 go to the Autoscaling group. Then add name and then click on Create a launch template(it's for configuration of new EC2).
+      b) Load balancer scheme---->  Internal (inside services in aws account), Internet (outside global user) (choose this one)
+      c) Target Group(TG)-----> EC2 machines are not connected directy to ELB, EC2 registered with TG and TG connected to ELB.
+             Target group means like it's just a setting where you all register all EC2 Info.
+             Health check always done at target group level.
+      d) In health check we have to select for health check feature.
+      e) group size-----> Desired capacity,  Minimum capacity, Maximum capacity   (for auto scaling)
+                        Desired capacity---> How many EC2 instance need to create at very first time, ByDefault
+
+
+      f) Then go to Load Balacing option, check Load Balancers and Target groups details which recently created
+         Here we can find DNS name(means load balancer internal url)...etc configuration.
+
+     Round Robin Algorithm (used in ELB)---> means distribute the requests with different EC2 machines.
+
+     g) When more traffics are comes, then scale out and scale in operation will work, But it dependes upon the Scale policy which we provided when we crate autoscaling.  That means we provide rules when autosacling will be happen.(as per Scale policy)
+
+  ** So autoscaling depends upon the CPU Utilization, How much CPU Utilization done will inform by help of "CloudWatch".
+     If more cpu-utilized above our rules set(% of CPU Utilization rule set in scale policy), then in cloud watch having features "Alarm", which notify for Autoscaling.
+
+     If you not set rules when creating autoscaling, then also possible to set rules. so for that we have to go 
+             Autoscaling----> Auto Scaling Groups---> Auto Scaling Group-->Create dynamic scaling policy (Then set rules for scale policy)
+             Then fill the field values like--> Metric type , Target value (% of utilizations)
+
+      Then Go to Cloud watch and click on All Alarms and you can able see here all created details. 
+     
+     i)  Application Load Balancer
+     ii) Network Load Balancer
+
+
+
+     (Compute Service)
+   4) Lambda   (Event driven programming)
+     ---------
+       It is also called serverless service.
+       "serverless service" means the service which is already created and configured by AWS team(by Amazon developer).
+            Here we no need to worry about in which server Lambda service is created and maintanied. (it's responsible of AWS Developer)  
+
+      Here Lambda is created by AWS Team, we can only create "Lambda Function".
+
+      It's internaly highly Available and Scalable also.
+
+     Then after creating Lambda function, we can deploy the code directle/mannualy. (But code deploy through Jenkins is Good practise)
+
+    Practical------> First execute the demo part which demo code provided by AWS below.
+                       Then create Lambda Function.
+       
+     We need to trigger services in Lambda function configuration, that the services which you need as per application Architect..
+    
+     Doubt-->There is no need to trigger the destination services in Lambda function only need role. (ex-S3, DynamoDB)
+   
+
+       Storage Services  (S3, EFS)
+   ----------------------------------
+      5) Simple Storage Service(S3):
+         --------------------------
+         
+          In S3, mainly we work 2 major operation:
+                      1. Upload  (PUT operation)
+                      2. Download (GET operation)
+
+          It is also a serverless service.  (serverless-->create server, configured server, autoscale, HA by AWS developer)
+
+         "Bucket"  is a logical container where we store the file.
+         "Object"  means combination of  file + Key + metadata .
+                   (Key means filename along with the extension name. i.e. "Nayak.jpg")
+                           file----> Nayak 
+                           Key-----> Nayak.jpg
+                           metadata----->it's size, type...etc.
+        
+        The size of the Bucket by default 0 . (max size --->no limit (auto scale enable by AWS side bydefault))
+        
+        S3 is mostly used for store Backup files, multimedia data, Big data etc.
+       ** S3 provide best security, because here encryption technique is used i.e. "AES-256 Algorithm"  
+                                                                      (AES- Advance Encryption Standard)
+          In the time of upload the file into Bucket, file is encrypted and when download the same file from bucket, it will automate decrypted.
+  
+       Access control----> In S3 Bucket Policy AWS team add the policy, that who will able to access the bucket.
+
+        For custom Policy create--> https://awspolicygen.s3.amazonaws.com/policygen.html
+
+        We can create replication of a Bucket for available same bucket in another region, if any disaster will happen.
+
+       
+       AWS S3 Intelligent Tier
+      ------------------------
+       Optimizes cost by moving objects between 4 access tier when access patterns change.
+
+                      i) Frequent Access Tier
+                      ii) Infrequent Access Tier
+                      iii) Archieve Access Tier
+                      iv) Deep Access Tier
+       If a storage is not used from 30 days, automate it comes to Infrequent access tier.
+
+       From Infrequent access tier to archieve and deep (we can configure in AWS Infra).
+       Archieve access tier- (90 to 730 days of infrequent)           Deep access tier- (180 -730 days of Archieve)
+       
+       
+
+      6) Elastic File System (EFS):
+         -------------------------
+
+          It's also a storage service, But it is made for EC2 machines to use.
+
+          EFS help use to create common storage for all EC2 machines in VPC.
+          That's why EFS is also called a "Shared storage".
+
+          Security---> It's also having encryption technique and it's created inside VPC.
+
+        
+
+       DataBase  (RDS, Aurora, DynamoDB)
+   ----------------------------------
+      5) Relational Database Service(RDS): (Machine Like a EC2, where pre-installed DB s/w available)
+         ---------------------------------
+                 (Data store in a structured / organised manner)
+             
+           DataBase software name--> Oracle DB, Postgresql, MySql, SQL server, MongoDB, DynamoDB..etc
+
+           Data Base Types----> Relational DB (Structered DB),  Non-Relational DB (Not Structured DB)
+           
+           RDS Language Support--->SQL (Structured Qury Language)
+
+        ** RDS will allow to create the Virtual machine and it will give you a pre-installed database software.
+              5 DataBase software pre-installed like below:
+                                 1) MySQL           (standard/original)
+                                 2) PostgreSQl      (standard/original)
+                                 3) Oracle          (standard/original)
+                                 4) MariaDB         (standard/original)
+                                 5) MS SQL Server   (standard/original)
+            RDS Machine + EBS + preinstalled Software
+
+         Practical-----> Search RDS in AWS and use config as per your requirement.
+
+               After creating the DB (any form above 5), AWS Architect team will provide below credntials for access DB
+                                               DB Name
+                                               UserName
+                                               Password
+                                               DB endpint and port
+            ** For enable Autoscale of RDS, we have to configure Multi-AZ DB instance while creating RDS.
+                   ("Primary" RDS machine and "StandBy" RDS machine (if primary fails, then standby will start to work))
+
+             Note: In RDS+ standard database (i.e. any above 5 db s/w) maximum number of machines replica (scaling) is 5.
+            
+
+      6) Aurora:
+      -----------
+
+       Aurora is a database software which is created by AWS. It's relational database.
+       Aurora is compatible with Standard MySQL and also compatible with postgreSQL. (Aurora having these 2 version)
+
+       RDS + Aurora MySQl is 5 times faster than RDS+ standard MySQL.
+
+       RDS+ Aurora postgreSQL is 3 times faster than RDS+ standard postgreSQL.
+
+       Note: Why Aurora MySQl compatible or Aurora postgreSQL compatible available in RDS , when there are standard MySQl and postgreSQL availabe?
+        Ans---> Because of Lincens issue and cost issue. (Lincens issue means maximum company needs always licensed software.)
+
+       In RDS+Aurora, there is no need worry about the storage(EBS), AWS team is internally create EBS volume for RDS machines.
+       When you go to create RDS+Auora database software, there will no option for EBS, bcz it's mantained by AWS team.
+
+       Note: In RDS+Aurora database maximum number of machines replica (scaling) is 15.
+
+
+       DMS(Database migration service)----> It's for, if a company wants to migrate one DB type to another, then it's possible by this service.
+
+      
+
+
+     
+      7) DynamoDB: (Non-Relational Database)   
+      ------------
+
+       DynamoDB is a Non-relational Database.
+       It is also called as no SQL database.
+     
+       It is also a serverless service.
+
+       Table  , Attributes (Column), Item (Row)
+
+     **It's work as fexible schema and faster than other Database.
+              (fexible schema--->means attirbutes and rows changes for different entry in the Table.)
+                        (means different items with different attributes in same table.)
+
+       "PartiQL" is an language is used for create operation in AWS DynamoDB.  (similar to SQL language)
+
+      Note: A single item (row) of dynamoDB can have maximun 4 KB space.
+
+      In dynamoDB primary key is called as "Partition key"
+
+      Backup for DynamoDB Tables---> Point-in-time recovery (PITR) 
+           (Point-in-time recovery provides continuous backups of your DynamoDB data for 35 days to help you protect against accidental write or delete operations.)
+
+      We can create replicas of DynamoDB tables for another multiple regions also.
+
+
+
+
+
+      Netowking:
+  -------------------
+      8) VPC  (Virtual Private Cloud)  
+        -----------------------------
+        VPC is a regional service. Maximum 5 VPC per region is possible.
+        VPC is provide us a isolated network.
+
+        There is one default VPC created by AWS in every region.        
+
+        All machines will need private IPs inside the VPC isolated network.
+
+        When a global user want to access vartual machines, then VM need public IP address of outside global user's machine.
+        
+       
+        2 types of IP-----> IPv4   and  IPv6
+
+               IPv4----> 32 bits address , it is used for provide both public IP and private IP.
+                        
+               IPv6----> 128 bits address (IPv6 developed by network engineer because ipv4 number format will completed in some days,    there will be issue to create new IPs number for a new machine). It is use for provide Public IP.
+
+
+     CIDR---> Classless Inter-Domain Routing. (The below calculation is called CIDR range)
+                (for 1 region max 5 VPC, for 1 VPC we can add max 5 CIDR)
+
+                 10.0.0.0/32 (private IP) ----------> here 32 means n/w bits
+                                             host bits---> 32bits - n/w bits
+                                           Then how many IPs are possible = 2 to the power host bits.(2^hostbits)
+                  i.e. 2^0=1---->10.0.0.0
+
+
+    Example:   10.0.0.0/30  >>>>>>>  n/w bits= 30,  
+                                     host bits = 32-30 = 2
+                                     IPs possible = 2^2 = 4           
+                  i.e. 2^0=1---->10.0.0.0  to 10.0.0.3
+
+        Practical:
+                  
+            step1: (create VPC) (network)
+                  VPC---->Your VPC---->Create VPC -->VPC only---->cidrrange(10.0.0.0/24)-->
+            step2: (create subnets) (sub network)
+                 subnets means sub network-->diving vpc into different sub network.
+                 It is created for difference between the public IP and PrivateIP 
+                    (example EC2 direct access by public, not RDS--->here EC2 in one subnet and RDS will available another instance) 
+                  
+                 subnet----> create subnet---->choose VPC ID   --->subnet cidr (1st range IP)---> add another subnet(last range IP)
+   
+            so till now in practical nobody is public  or nobody is private. we are going to make it public else private.
+        
+            step3: IGW (Internet Gateway)  (making subnet public / private)
+                   Gateway like for your VPC.
+                  Internet gateways---->create internet gateway--->give the name and create.
+                  after creating IGW, click on action and attach to VPC and select created custum VPC. (1 IGW-->1 VPC)
+
+                  Create route tables for both created subnets. (route-tables means traffic route information)
+                  
+                  route tables---> after creating go subnet associations--->explicit connected-->edit subnet association
+                  -------->routes---->add route--->0.0.0.0(destination) --->in target choose internet gateway
+
+                  for making subnet as private, then no need of add IGW, Because by local rule it's possible for communication between machines inside the VPC.
+
+
+          step4: Create EC2 VMs and use all above configuartion
+
+
+    NAT------> Network Address Translation  (It is always inside public subnet, connect with IGW)
+          (i.e. request from DB server to public-internet IP not possible, so 1st request come from DB server to NAT, then NAT pass the request to  public-internet IP. Then response from  public-internet IP to NAT and then response deliver to DB server )
+
+ VPC "Peering"------> connect VPC of a one region to another region VPC, possible by VPC peering by privateIPs.
+
+ Cloud Model
+ ------------
+      1) On premises (Onprem means own physically maintained DB)
+      2) Cloud (pure cloud like AWS)
+      3)Hybrid Cloud (Onprem + AWS---->Some server on onprem connect with AWS cloud)
+
+
+
+
+    Domain Name System (DNS) --->28th lesson
+   --------------------------
+    9) Route53
+     ----------
+     The name for this service (Route 53) comes from the fact that DNS servers respond to queries on port 53 and provide answers that         route end users to your applications on the Internet.
+
+      The mediator who will map the Host name(esluat.max) to IP address(172.23.6.10), that is done by DNS.
+
+      TLD-->Top Level Doamin (Authorised IANA-->Internet Assigned Numbers Authority) like Google.com
+      SLD-->Second Level Domain (Here Rout53 work) like 3rd party company
+
+      Rout53 is DNS service provided by AWS.
+
+      Rout53 provides below features:
+              i)   Domain Registration
+              ii)  DNS
+              iii) Health check Monitoring
+              iv)  Routing Policies
+   
+  Practical:
+       Route53----> Registered Domain.
+       Dashboard -->Create hosted zone.  (also use Alias for diff Record type)
+                    Health checks. (can check health by IP or domain name)
+
+       Routing Policy--->(for different condition how Route53 work)
+                         Simple Routing
+                         Failover
+                         Latency Based Routing
+                         Weighted Policy (number of traffic come, it's traffic based)
+                         GeoLocation (Based on people location, request will send to the same location server)
+                         Geo-Proximity
+                         
+
+   Example (Failover policy type)---> When Route53 check ELB is not healthy of any primary region beacuse of any disaster, then it will connect with different Region secondary ELB. 
+
+
+
+  
+ 10) API Gateway:   (Default time out--->29000 mili sec)    (29th lesson)
+    -------------
+     API----> Application Programming Interface.
+     API acting as an interface between the two applications.
+
+     Calling any AWS service directly is not an good approach, so for that we have to use API Gateway in application Architecture.
+ 
+    features by use API Gateway:
+         i)Integration of Service hidden from the client application.
+         ii) API Gateway provides Cache facilities, hence it reduces latency and Also reduces burden from Integration service.
+             (By-default cache is disabled in API Gateway, If you need then enable it.
+              In Cache having TTL Config, means TTL-->Time to Live, the time that an object is stored in a caching system before it's    deleted or refreshed.)
+        
+         iii) Security
+                * Control Throughput (number of request per second, like 10,000/sec) 
+                 DDOS--> Distributed Denial of Service.  
+                 (Secuity Attacks, attackers hits same api million times, then that time Control Throughput work properly.) 
+               * WAF (Web Application Firewall)
+                    Prevent us from web attacks. You can enable / disable the WAF in apigateway.
+
+         iv) Providing Authorization
+
+     (method request-->integration request, integration response---->method response)
+
+   Practical-------------> We can test service, by click on test inside apiGateway endpoint.
+                 API Gateway-----> API Gateway Name---> Stages--->settings Enable API cache, Enable throttling, Enable Web Application Firewall  configuration are available.
+
+
+  For Authorization create authorizers: API Gateway-----> API Gateway Name---> Authorizers
+
+  For subscription: API Gateway-----> API Gateway Name---> Usage Plans---> create consumer and x-api-key (here add hit/sec config for specific consumer also)
+  
+  For IP Whitelist: API Gateway-----> API Gateway Name---> Resource Policy ----> IP whitelist of different consumer
+
+
+
+    11) SQS:  (Simple Queue Service)
+      --------
+       Decoupling approach
+       Asyncronization request
+
+       ---> It's a Serverless Service. (HA, Scalability)
+       --->   No limit of Size, can store unlimited messages.
+       ---> A single message can be maximum 256KB size.
+       ----> 2 types: Standard, FIFO
+       -----> Visibility Time out (process the message and after complete process delete the message from Queue) 
+      ----> Count Number configuration  (hit the same request, till getting 200 response, depends upon max count)
+
+       -----> When creating FIFO SQS, must have to give extension, like  MyFirstSQS.fifo  .(also enable content -based deduplication)
+      
+        practical:   After Create SQS----->click on send and receive message.
+
+
+    12) SNS: (Simple Notification Service) 
+       -----
+       (Publisher And Subscriber)
+    Amazon Simple Notification Service (Amazon SNS) sends notifications two ways, A2A and A2P. 
+         A2A--->Applicatopn to Application, A2P --> Application to person
+    A2A provides high-throughput, push-based, many-to-many messaging between distributed systems, microservices, and event-driven   serverless applications. These applications include Amazon Simple Queue Service (SQS), Amazon Kinesis Data Firehose, AWS Lambda, and other HTTPS endpoints.
+ A2P functionality lets you send messages to your customers with SMS texts, push notifications, and email.
+     
+      Practical:
+              Create Topic----> Add a topic name
+              publish messages --> Add subject, message Body...etc
+              Create Subscriber---> after subsription for Email, open email and confirm the subscription.
+              Publish message----> add body msg and then publish
+
+
+     12) SES: (Simple Email Service)
+       --------
+
+    
+
+     13) Cloud Front:
+        --------------
+              ---> CDN (Content Delivery Network)
+              --->Edge_Location
+              ----> Cache
+           ------>   Through Cloud front, we can customise the access of any AWS resource available to which region.
+
+          ----->Invalidations: (use for clear the Cache)
+                         When response store in cache for TTL time period, if in that time in application we done changes,
+                  then using of cloud_front "Invalidations" (one time job) we can delete Cache and when request come then it will
+                  come to the origin and get the response from updated application and store in to cache and provide the response to end point user.
+           
+ 
+          14) AWS Batch:
+        --------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+               
+ 
+
+
+
+
+
+  
+
+
+
+           
+              
+  
+
+   
+          
+   
+  
+      
+      
+
+   
+   
+    
+   
+    
+            
+
+       
+
+     
+
+
+
+
+                                               
+
+
+
+
+1) EC2: Elastic Computing Cloud (like our @max system)(row server/personal computer)
+   AMI: Amazon Machine Image (customization of an EC2 instance)
+   IAM: Identity and Access Management.
+2) Elastic BeanStalk (uploading our code, it's used to deploy an application + Environment)
+3) AWS Lambda (Automated version of EC2/executing background service)
+         (Serverless compute service)
+   SDK: Software Development Kit (Need to install in Eclipse (https://aws.amazon.com/eclipse))
+3) SQS: Simple Queue Service
+4) SES: Simple Email Service
+5) S3 (data which need regularly) (simple storage service)
+6) S3 Glacier (data which not need regularly, i.e DOB certificate)
+7) VPC, Direct Connect, Route 53 (for network connectivity)
+   Route 53 is a domain name system. URL-->Route 53-->Computer
+8) AWS Cloud Front (sets intermediate points where retrieve data will fast , i.e data from USA)
+9) AWS Cloud Watch (analyse trends and monitor system performance)
+10) SNS (Simple notification service)
+11) IAM: Identity and Access Management
+12) MFA: Multi Factor Authentication (Auth)
+13) CLI: Command line interface
+14) EBS: Elastic Block Store (It's a network drive But not physically)
+15) EFS: Elastic File System
+16) SSL: Secure sockets layer (used to encrypt connection)
+17) TLS: Transfer layer security (newer version of SSL)
+18) ECS: Elastic container service
+19) ASG: Auto scaling group
+20) ELB: Elastic load balancer(check the health of EC2 instances)
+21) RDS: Relational Database Service.
+22) NLB: Network load balancer.
+23) SQS: Simple Queue Service.
+24) SNS: Simple Notification Service.
+25) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Metadata:
+---------
+Metadata in Java is used to know the data about data.
+It means for example table field names, field data type,
+field data type length, database table names, 
+number of databases that existed in the specific database, etc.
+
