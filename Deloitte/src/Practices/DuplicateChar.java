@@ -1,7 +1,6 @@
 package Practices;
 
 //find duplicate characters in a strings
-
 import java.util.Scanner;
 
 public class DuplicateChar {
