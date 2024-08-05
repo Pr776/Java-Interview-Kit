@@ -1,0 +1,69 @@
+1. Tell me about yourself.
+Answer:
+"I have 2 years of experience as a Java developer, primarily working with Spring Boot for backend development.
+ I graduated with a degree in Computer Science and have since been involved in several projects that enhanced my skills in Java,
+ RESTful APIs, and microservices. I enjoy problem-solving and am passionate about writing clean, efficient code. 
+In my previous role at [Your Previous Company], I was part of a team that developed and maintained web applications, 
+and I also contributed to improving the performance and scalability of our systems."
+
+2. Why do you want to work with us?
+Answer:
+"I am impressed by [Company’s] commitment to innovation and excellence in the tech industry. 
+I am particularly drawn to the projects you are working on in [mention a specific area if relevant]. 
+I believe my skills and experience in Java development, combined with my enthusiasm for continuous learning, 
+would make me a valuable asset to your team. I am excited about the opportunity to contribute to your ongoing success and to grow alongside [Company]."
+
+3. What are your strengths and weaknesses?
+Answer:
+"My strengths include strong problem-solving skills, attention to detail, and a solid understanding of Java and Spring Boot.
+ I am also good at collaborating with cross-functional teams and am always keen on learning new technologies. 
+As for weaknesses, I sometimes tend to be overly critical of my work, which can lead to spending too much time on minor details.
+ However, I am working on balancing perfection with efficiency by setting more realistic timelines for myself."
+
+4. Describe a challenging project you worked on and how you handled it.
+Answer:
+"One of the most challenging projects I worked on involved migrating a monolithic application to a microservices architecture. 
+
+The project required careful planning to ensure minimal downtime and data integrity. I handled it by collaborating closely with my team, 
+breaking down the project into smaller tasks, and using tools like Docker and Kubernetes for containerization and orchestration. 
+We conducted thorough testing and gradually rolled out the changes, which helped us identify and resolve issues quickly. 
+The project was successful, and we achieved improved scalability and performance."
+
+5. How do you stay updated with the latest technology trends?
+Answer:
+"I stay updated with the latest technology trends by following industry blogs, participating in online forums like Stack Overflow, 
+and attending webinars and conferences. I am also an active member of a few Java and Spring Boot communities where we share knowledge and best practices. 
+Additionally, I take online courses on platforms like Coursera and Udemy to continuously enhance my skills."
+
+6. How do you handle tight deadlines and pressure?
+Answer:
+"I handle tight deadlines and pressure by prioritizing tasks and staying organized. 
+I break down projects into smaller, manageable tasks and set realistic deadlines for each. 
+Effective communication with my team is crucial, as it ensures everyone is aligned and aware of their responsibilities. 
+When under pressure, I focus on staying calm and maintaining a positive attitude, which helps me think clearly and make informed decisions."
+
+7. Can you give an example of how you have contributed to team success?
+Answer:
+"In my previous role, our team was tasked with developing a new feature for our main application within a tight deadline. 
+I took the initiative to organize daily stand-up meetings to ensure everyone was on the same page and to identify any blockers early. 
+I also shared my knowledge of a particular framework that we were using for the first time, which helped speed up the development process.
+ My proactive approach and willingness to help others contributed to our successful and timely delivery of the feature."
+
+8. Why are you leaving your current job?
+Answer:
+"I have enjoyed my time at [Current Company] and learned a lot from my role. However,
+ I am looking for new challenges and opportunities to further develop my skills and advance my career. 
+I believe that [Company] offers a dynamic environment and exciting projects that align with my professional goals and aspirations."
+
+9. What are your career goals for the next five years?
+Answer:
+"In the next five years, I aim to deepen my expertise in Java and related technologies, potentially stepping into a lead developer or architect role.
+ I am also interested in gaining experience with cloud computing and DevOps practices. Ultimately, 
+I want to contribute to innovative projects that make a significant impact while continuing to grow both personally and professionally."
+
+10. Do you have any questions for us?
+Answer:
+"Yes, I do have a few questions. Can you tell me more about the team I would be working with and the projects 
+I would be involved in? What are the opportunities for professional development and growth within the company? 
+Additionally, what are the next steps in the interview process?"
+
