@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import lombok.NonNull;
 
 @Data
 @ApiModel(value = "PaymentRequestDTO", description = "Parameters required for a payment")
